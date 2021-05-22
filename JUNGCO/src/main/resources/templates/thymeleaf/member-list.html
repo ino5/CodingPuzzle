@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link th:href="@{/css/member-list.css}" rel="stylesheet" type="text/css">
+<script>
+	function functionEdit(classNo) {
+		/* Convert to false about readOnly */
+		var className = "class_" + classNo
+		var myList = document.getElementsByClassName(className);
+		for (var i = 0; i < myList.length; i++) {
+			var obj = myList.item(i);
+			if (obj.name == "no" || obj.name == "date")
+				continue;
+			obj.readOnly = false;
+		}
+
+		/* Convert to the edit button */
+		var myButton = document.getElementById("button_" + classNo);
+		if (myButton.innerHTML == "Submit") {
+			console.log("ok");
+			var myForm = document.getElementById("form_" + classNo);
+			myForm.action = "/edit";
+			myButton.type = "submit";
+		} else {
+			myButton.innerHTML = "Submit";
+		}
+
+		/* Hide the original submit button  */
+		var myFinalSubmit = document.getElementById("submit_final");
+		myFinalSubmit.style.visibility = "hidden";
+
+		/* Convert to true about readOnly */
+		var myListForAdd = document.getElementsByClassName("add");
+		for (var i = 0; i < myListForAdd.length; i++) {
+			var obj = myListForAdd.item(i);
+			obj.readOnly = true;
+			obj.style.backgroundColor = "#F6F6F6";
+		}
+
+	}
+</script>
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>In the Database</h3>
+	<table border="0">
+		<tr>
+			<th>NO</th>
+			<th>NAME</th>
+			<th>CONTENT</th>
+			<th>DATE</th>
+		</tr>
+		<tr th:Each="member : ${memberList}">
+			<form action="/delete" method="post" th:attr="id=${'form_'+member.no}">
+				<td><input type="number" th:attr="class=${'class_'+member.no}" name="no" readOnly="true" th:value="${member.no}"></td>
+				<td><input type="text" th:attr="class=${'class_'+member.no}" name="name" readOnly="true" th:value="${member.name}"></td>
+				<td><input type="text" th:attr="class=${'class_'+member.no}" name="content" readOnly="true" th:value="${member.content}"></td>
+				<td><input type="text" th:attr="class=${'class_'+member.no}" name="date" readOnly="true" th:value="${member.date}"></td>
+				<td><input type="submit" value="Delete"></td>
+				<th:set var="max_no" th:value="${member.no}" />
+				<td><button th:attr="id=${'button_'+member.no}" th:onclick="functionEdit([[${member.no}]]);" type="button">Edit</button></td>
+			</form>
+		</tr>
+		<form action="/add" method="post">
+			<tr>
+				<td><input type="number" class="add" name="no" readonly="true" th:value="${max_no+1}"></td>
+				<td><input type="text" class="add" name="name"></td>
+				<td><input type="text" class="add" name="content"></td>
+			</tr>
+	</table>
+	<table>
+		<tr>
+			<td></td>
+			<td></td>
+			<td><input id="submit_final" type="submit" value="Submit"></td>
+		</tr>
+		</form>
+	</table>
+</body>
+</html>

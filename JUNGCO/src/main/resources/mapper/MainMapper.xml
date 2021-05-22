@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.DAO.MainMapper">
+
+<select id="selectMember" resultType="com.example.demo.DTO.MemberDTO">
+	select * from test order by no asc;
+</select>
+
+<insert id="insertMember" parameterType="com.example.demo.DTO.MemberDTO">
+	INSERT INTO test VALUES (#{no}, #{name}, #{content}, NOW())
+</insert>
+
+<delete id="deleteMember" parameterType="com.example.demo.DTO.MemberDTO">
+	DELETE FROM test WHERE no = #{no} and name = #{name} and content = #{content}
+</delete>
+
+<update id="editMember" parameterType="com.example.demo.DTO.MemberDTO">
+	UPDATE test set name = #{name}, content = #{content}, date = NOW() where no = #{no}
+</update>
+
+</mapper>
