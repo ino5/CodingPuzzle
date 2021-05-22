@@ -15,13 +15,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.DTO.MemberDTO;
+import com.example.demo.Services.loginService.ServiceLogin;
+import com.example.demo.Services.loginService.ServiceLoginImpl;
 import com.example.demo.Services.memberService.ServiceMemberImpl;
 
 @Controller
 public class MainController {
 	
+	@Resource(name = "ServiceLogin")
+	private ServiceLoginImpl svcLoginCheck;
+	
 	@RequestMapping("/")
-	public String index(Model model) throws Exception {
+	public String index(HttpServletRequest request, Model model) throws Exception {
+		svcLoginCheck.loginCheck(request);
 		return "thymeleaf/index";
 	}
 	

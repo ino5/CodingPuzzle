@@ -13,10 +13,10 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @SpringBootApplication
 @MapperScan(value= {"com/example/demo/DAO"})
-public class RetryDemo1Application {
+public class JUNGCOApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RetryDemo1Application.class, args);
+		SpringApplication.run(JUNGCOApplication.class, args);
 	}
 	@Bean
 	public SqlSessionFactory sqlSEssionFacoty(DataSource dataSource) throws Exception{
