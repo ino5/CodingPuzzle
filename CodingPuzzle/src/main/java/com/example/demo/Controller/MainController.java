@@ -27,11 +27,16 @@ public class MainController {
 	
 	@RequestMapping("/")
 	public String index(HttpServletRequest request, Model model) throws Exception {
-		svcLoginCheck.loginCheck(request);
+		svcLoginCheck.loginSessionCheck(request);
 		return "thymeleaf/index";
 	}
 	
-	
+	@RequestMapping("/login")
+	public String login(HttpServletRequest request, Model model) throws Exception {
+		svcLoginCheck.loginSessionCheck(request);
+		svcLoginCheck.login(request);
+		return "thymeleaf/index";
+	}
 	
 	
 	@Resource(name = "ServiceMember")

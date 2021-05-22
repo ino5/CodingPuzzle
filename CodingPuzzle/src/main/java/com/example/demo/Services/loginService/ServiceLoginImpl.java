@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 public class ServiceLoginImpl implements ServiceLogin {
 
 	@Override
-	public int loginCheck(HttpServletRequest request) {
-		String sessionId = request.getRequestedSessionId();
-		System.out.println(sessionId);
+	public int loginSessionCheck(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String user_id = (String)session.getAttribute("user_id");
+		System.out.println(user_id);
 		return 0;
 	}
 
@@ -19,7 +20,11 @@ public class ServiceLoginImpl implements ServiceLogin {
 	public int login(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String user_id = request.getParameter("user_id");
-		String password = request.getParameter("password");
+		String password = request.getParameter("password");		
+		session.setAttribute("user_id", user_id);
+		session.setAttribute("password", password);
+		System.out.println(session.getAttribute("user_id"));
+		System.out.println(session.getAttribute("password"));
 		
 		return 0;
 	}
