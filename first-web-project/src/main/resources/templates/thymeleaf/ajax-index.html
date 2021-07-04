@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var xhr;
+		function ajaxSend() {
+			xhr = new XMLHttpRequest();
+
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 200) {
+						console.log("작업내용 작성");
+					}
+				}
+			};
+
+			xhr.open("POST", "/ajax-request", true);
+			xhr.setRequestHeader("Content-Type", "application/json");
+			xhr.send(null);
+		}
+
+		function ajaxRead() {
+			var data = xhr.responseText;
+			var parseData = JSON.parse(data);
+			var str = "";
+			str += parseData.hi + "<br>";
+			document.getElementById("read").innerHTML = str;
+		}
+
+		var xhr2;
+		var myResponseText = "it's null.";
+		function ajaxSend2() {
+			xhr2 = new XMLHttpRequest();
+			xhr2.open("POST", "/ajax-send", true);
+			xhr2.setRequestHeader("Content-Type", "application/json");
+			var dataSent = ""+document.getElementById('content').value;
+			if(dataSent == "") dataSent = "NULLLLL";
+			xhr2.send(dataSent);
+			xhr2.onreadystatechange = function() {
+				myResponseText = xhr2.responseText;
+				document.getElementById("xhr2").innerHTML = myResponseText;
+			};
+
+		}
+	</script>
+	<input type=text name="content" id="content">
+	<button onclick="ajaxSend2();">Send2</button>
+	<p id="xhr2"></p>
+	<br>
+	<button onclick="ajaxSend();">Send</button>
+	<button onclick="ajaxRead();">Read</button>
+	<p id="read">Value</p>
+</body>
+</html>
